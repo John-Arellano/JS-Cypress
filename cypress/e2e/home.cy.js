@@ -48,9 +48,34 @@ describe("Home Page", () => {
 
   it("TC_Home_006 - Should allow users to log in with valid credentials", () => {
     cy.fixture("home").then((homeData) => {
-      home.elements.username().type(homeData.username);
-      home.elements.password().type(homeData.password);
+      home.elements.username().type(homeData.login.username);
+      home.elements.password().type(homeData.login.password);
       home.elements.loginButton().click();
+    });
+  });
+  it("TC_Home_007 - Should navigate to the registration page when clicking the register link", () => {
+    home.navegatingToRegisterPage();
+  });
+
+  it("TC_Home_008 - Should fill the registration form with dynamic values", () => {
+    cy.fixture("home").then((homeData) => {
+      const registerData = {
+        ...homeData.register,
+        username: `${homeData.register.username}${Date.now()}`,
+        password: `Pass${Date.now()}!`,
+        confirmPassword: `Pass${Date.now()}!`,
+      };
+
+      home.navegatingToRegisterPage();
+      home.fillRegistrationForm(registerData);
+      home.elements.registerButton().should("be.visible");
+      home.elements.registerButton().click();
+      home.elements
+        .accountCreatedMessage()
+        .should(
+          "contain.text",
+          "Your account was created successfully. You are now logged in.",
+        );
     });
   });
 });

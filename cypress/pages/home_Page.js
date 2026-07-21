@@ -39,10 +39,41 @@ class home {
     transferFundsLink: () =>
       cy.get("#rightPanel > ul.servicestwo > li:nth-child(4) > a"),
     readMoreLink: () => cy.get("#rightPanel > p:nth-child(4) > a"),
+    registerLink: () => cy.get("#loginPanel > p:nth-child(3) > a"),
+    firstNameInput: () => cy.get("input[name='customer.firstName']"),
+    lastNameInput: () => cy.get("input[name='customer.lastName']"),
+    addressInput: () => cy.get("input[name='customer.address.street']"),
+    cityInput: () => cy.get("input[name='customer.address.city']"),
+    stateInput: () => cy.get("input[name='customer.address.state']"),
+    zipCodeInput: () => cy.get("input[name='customer.address.zipCode']"),
+    phoneInput: () => cy.get("input[name='customer.phoneNumber']"),
+    ssnInput: () => cy.get("input[name='customer.ssn']"),
+    usernameRegisterInput: () => cy.get("input[name='customer.username']"),
+    passwordRegisterInput: () => cy.get("input[name='customer.password']"),
+    confirmPasswordInput: () => cy.get("input[name='repeatedPassword']"),
+    registerButton: () => cy.get("input[value='Register']"),
+    accountCreatedMessage: () => cy.get("#rightPanel > p"),
   };
 
   navigate() {
     cy.visit("https://parabank.parasoft.com/parabank/index.htm");
+  }
+  navegatingToRegisterPage() {
+    this.elements.registerLink().click();
+  }
+
+  fillRegistrationForm(data) {
+    this.elements.firstNameInput().clear().type(data.firstName);
+    this.elements.lastNameInput().clear().type(data.lastName);
+    this.elements.addressInput().clear().type(data.address);
+    this.elements.cityInput().clear().type(data.city);
+    this.elements.stateInput().clear().type(data.state);
+    this.elements.zipCodeInput().clear().type(data.zipCode);
+    this.elements.phoneInput().clear().type(data.phone);
+    this.elements.ssnInput().clear().type(data.ssn);
+    this.elements.usernameRegisterInput().clear().type(data.username);
+    this.elements.passwordRegisterInput().clear().type(data.password);
+    this.elements.confirmPasswordInput().clear().type(data.confirmPassword);
   }
 }
 
